@@ -9,6 +9,8 @@ import Companies from './pages/Companies'
 import { useSelector } from 'react-redux'
 import UserNavbar from './components/UserNavbar'
 import { useEffect, useState } from 'react'
+import UserHome from './pages/UserHome'
+import Login from './pages/Login'
 
 function App() {
 
@@ -41,22 +43,17 @@ function App() {
         <Navbar />
       }
 
+      
+
+      
 
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/register' element={<Register/>}/>
-      </Routes>
-      
-
-      
-
-      {/* <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={ isLoggedIn ? <UserHome/> :<Home/>} />
         <Route path='/register' element={<Register/>}   />
         <Route path='/jobs' element={<Jobs/>}   />
         <Route path='/companies' element={<Companies/>}   />
-
-      </Routes> */}
+        <Route path='/login' element={<Login/>} />
+      </Routes>
     </>
   )
 }

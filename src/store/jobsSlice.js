@@ -16,7 +16,7 @@ export const fetchJobs = createAsyncThunk(
 
             const response = await fetch(`https://remotive.com/api/remote-jobs?category=${category}&limit=50`)
             const data = await response.json()
-            console.log(data.jobs, "aodsfjk")
+            
 
             return data.jobs
         } catch (error) {

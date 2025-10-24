@@ -11,6 +11,7 @@ import UserNavbar from './components/UserNavbar'
 import { useEffect, useState } from 'react'
 import UserHome from './pages/UserHome'
 import Login from './pages/Login'
+import ApplySectoin from './pages/ApplySection'
 
 function App() {
 
@@ -50,9 +51,14 @@ function App() {
       <Routes>
         <Route path='/' element={ isLoggedIn ? <UserHome/> :<Home/>} />
         <Route path='/register' element={<Register/>}   />
-        <Route path='/jobs' element={<Jobs/>}   />
+
+
+        <Route path='/jobs/:category' element={<Jobs/>}   />
         <Route path='/companies' element={<Companies/>}   />
         <Route path='/login' element={<Login/>} />
+
+
+        <Route path='/jobs/:category/applyto/:id' element={ <ApplySectoin/>}/>
       </Routes>
     </>
   )

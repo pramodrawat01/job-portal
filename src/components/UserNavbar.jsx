@@ -1,25 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from 'react-redux';
 import { userSearch } from '../store/searchSlice';
 import { RxHamburgerMenu } from "react-icons/rx";
+import Overlay from './Overlay';
+import ProfileCompo from './ProfileCompo';
 
 const UserNavbar = () => {
 
-   
+   const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   const dispatch = useDispatch()
   const {searchValue} = useSelector(state => state.search)
   console.log(searchValue, "this is store value")
   return (
     <div className='flex justify-around py-2 bg-[#2f2f2f] text-white'>
+
+      {
+        isProfileOpen ? 
+        (<>
+          <Overlay/>
+          <ProfileCompo setIsProfileOpen={setIsProfileOpen}/>
+        </>) :
+        null
+      }
+
         <div className='flex gap-2'>
             <Link to='/'>naukar.com</Link>
 
 
             <div className='group'> 
-              <Link to='/jobs' className='border-1 rounded-sm px-4' >Jobs</Link>
+              <Link to='/jobs' className='border-1 rounded-sm px-4 ' >Jobs</Link>
               <div className='job-hover absolute top-[40px] text-black hidden group-hover:block'>
                 <p>Recommended jobs</p>
                 <p>invites</p>
@@ -52,7 +64,7 @@ const UserNavbar = () => {
             <Link to='/login' className='border-1 rounded-sm px-4'>Login</Link>
             <Link to='/register' className='border-1 rounded-sm px-4' >Register</Link>
             <Link to=''></Link>
-            <RxHamburgerMenu className='text-white' />
+            <RxHamburgerMenu className='text-white' onClick={()=> setIsProfileOpen(true)} />
         </div>
     </div>
 

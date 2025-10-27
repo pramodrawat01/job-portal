@@ -6,6 +6,7 @@ import { userSearch } from '../store/searchSlice';
 import { RxHamburgerMenu } from "react-icons/rx";
 import Overlay from './Overlay';
 import ProfileCompo from './ProfileCompo';
+import logo from '../assets/logo1.png'
 
 const UserNavbar = () => {
 
@@ -14,8 +15,11 @@ const UserNavbar = () => {
   const dispatch = useDispatch()
   const {searchValue} = useSelector(state => state.search)
   console.log(searchValue, "this is store value")
+
+
+
   return (
-    <div className='flex justify-around py-2 bg-[#2f2f2f] text-white'>
+    <div className='flex items-center justify-between h-[80px] px-[185px] w-full mx-auto shadow-md shadow-black/30 fixed top-0 left-0  bg-white z-[9999]'>
 
       {
         isProfileOpen ? 
@@ -26,8 +30,12 @@ const UserNavbar = () => {
         null
       }
 
-        <div className='flex gap-2'>
-            <Link to='/'>naukar.com</Link>
+          <div className='flex gap-4  items-center '>
+            
+            <Link to='/' className='flex items-center'>
+              <img src={logo} className='h-[70px]'/>
+              <div className='text-2xl font-semibold text-[#117a5b]'>jobSpot</div>
+            </Link>
 
 
             <div className='group'> 
@@ -53,18 +61,18 @@ const UserNavbar = () => {
             
         </div>
 
-        <div className='flex border-1 rounded-sm items-center px-3'>
+        <div className='flex border-1 rounded-sm items-center px-3 py-1.5'>
           <input 
           onChange={(e)=> dispatch(userSearch(e.target.value))}
           type='text' placeholder='search jobs' className='outline-none  rounded-sm ' />
-          <CiSearch  className=''/>
+          <CiSearch  className='text-[#117a5b]'/>
         </div>
 
         <div className='links flex gap-4 items-center' >
-            <Link to='/login' className='border-1 rounded-sm px-4'>Login</Link>
-            <Link to='/register' className='border-1 rounded-sm px-4' >Register</Link>
-            <Link to=''></Link>
-            <RxHamburgerMenu className='text-white' onClick={()=> setIsProfileOpen(true)} />
+            <Link to='/login' className='border-1 rounded-sm px-4 py-1.5 border-[#117a5b]'>Login</Link>
+            <Link to='/register' className='border-1 rounded-sm px-4 py-1.5 text-white bg-[#117a5b]' >Register</Link>
+           
+            <RxHamburgerMenu className='text-[#117a5b] text-2xl' onClick={()=> setIsProfileOpen(true)} />
         </div>
     </div>
 

@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react'
 import UserHome from './pages/UserHome'
 import Login from './pages/Login'
 import ApplySectoin from './pages/ApplySection'
+import Footer from './pages/Footer'
+import JobsCategory from './pages/JobsCategory'
 
 function App() {
 
@@ -35,32 +37,38 @@ function App() {
   
   
   return (
-    <>
+    <div className='bg-[#F8F9FA]'>
 
       {
         isLoggedIn ? 
         <UserNavbar/>
         : 
         <Navbar />
-      }
+      } 
 
       
 
-      
+      <div className='w-[75vw] mx-auto mt-[80px] pt-10 '>
 
       <Routes>
         <Route path='/' element={ isLoggedIn ? <UserHome/> :<Home/>} />
         <Route path='/register' element={<Register/>}   />
 
-
-        <Route path='/jobs/:category' element={<Jobs/>}   />
+        <Route path='/jobs' element={<Jobs/>}/>
+        <Route path='/jobs/:category' element={<JobsCategory/>}   />
         <Route path='/companies' element={<Companies/>}   />
         <Route path='/login' element={<Login/>} />
 
 
         <Route path='/jobs/:category/applyto/:id' element={ <ApplySectoin/>}/>
       </Routes>
-    </>
+
+      </div>
+
+      <Footer/>
+    </div>
+
+
   )
 }
 

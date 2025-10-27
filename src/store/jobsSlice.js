@@ -18,6 +18,8 @@ export const fetchJobs = createAsyncThunk(
             const data = await response.json()
             
 
+            // await new Promise(res => setTimeout(res, 10000));
+
             return data.jobs
         } catch (error) {
             console.log(error)
@@ -30,6 +32,7 @@ const jobsSlice = createSlice({
     name : 'jobs',
     initialState : {
         jobs : [],
+        categories : [],
         loading : false,
         error : false
     },
@@ -43,6 +46,17 @@ const jobsSlice = createSlice({
             .addCase(fetchJobs.fulfilled, (state, action)=>{
                 state.loading = false,
                 state.jobs = action.payload
+
+                // ✅ Derive categories from jobs
+                const categoryMap = {};
+                action.payload.forEach(job => {
+                    categoryMap[job.category] = (categoryMap[job.category] || 0) + 1;
+                });
+
+                state.categories = Object.entries(categoryMap).map(([category, count]) => ({
+                    category,
+                    numOfJobs: count,
+                }));
             })
             .addCase(fetchJobs.rejected, (state, action)=>{
                 state.loading = false,

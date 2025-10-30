@@ -14,6 +14,7 @@ import Login from './pages/Login'
 import ApplySectoin from './pages/ApplySection'
 import Footer from './pages/Footer'
 import JobsCategory from './pages/JobsCategory'
+import AppliedHistory from './pages/AppliedHistory'
 
 function App() {
 
@@ -61,6 +62,8 @@ function App() {
 
 
         <Route path='/jobs/:category/applyto/:id' element={ <ApplySectoin/>}/>
+
+        <Route path='/appliedHistory' element={<AppliedHistory/>}/>
       </Routes>
 
       </div>

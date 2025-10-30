@@ -4,7 +4,36 @@ import { FiChevronRight } from "react-icons/fi";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJobs } from '../store/jobsSlice';
 
+const topHiringcompanies = [
+        "google", "microsoft", "amazon", 
+    ]
+
 const TopCompanies = () => {
+
+    console.log(topHiringcompanies, "this is top hiring companies")
+
+    // const [startIndex, setStartIndex] = useState(0)
+    // const [companiesToShow, setCompaniesToShow] = useState([])
+    // const prevSlid = ()=>{
+    //    if(startIndex !== 0 ){
+    //     setStartIndex(prev => prev-1)
+    //    }
+    // }
+    // const nextSlide = ()=>{
+    //     if(startIndex + 1 < topHiringcompanies.length){
+    //         setStartIndex(prev => prev+1)                   // for functional index 
+    //     }
+    // }
+    // useEffect(()=>{
+    //     if(topHiringcompanies.length >  0){
+    //         const newcom = topHiringcompanies?.slice(startIndex, startIndex+1)
+    //         setCompaniesToShow(newcom)
+    //     }
+    // }, [startIndex, topHiringcompanies])
+    
+
+
+
 
     const carouselRef = useRef(null);
     
@@ -27,9 +56,6 @@ const TopCompanies = () => {
 
 
 
-    // useEffect(()=>{
-    //     if(jobs) console.log("job in top companies", jobs)
-    // }, [])
 
 
     const companyCount = {}
@@ -40,14 +66,11 @@ const TopCompanies = () => {
         }
     });
 
-
-    
-
     const sortedCompanies = Object.entries(companyCount)
         .sort((a,b) => b[1]-a[1])
-        .slice(0,5)
+        .slice(0,7)
     
-        console.log(sortedCompanies, "sorted companies")
+        // console.log(sortedCompanies, "sorted companies")
     
     const topCompanies = sortedCompanies.map(([name]) => {
         return jobs.find(job => job.company_name === name)
@@ -61,7 +84,6 @@ const TopCompanies = () => {
 
             <div className='text-2xl font-semibold'>Top companies</div>
 
-            {/* carousel container */}
             <div
             ref={carouselRef} 
             className='no-scrollbar flex gap-2 overflow-x-scroll scroll-smooth  snap-x snap-mandatory no-scrollbar mt-8  h-[160px] '
@@ -92,8 +114,6 @@ const TopCompanies = () => {
             }
 
                 
-               
-                {/* Left & Right Buttons */}
                 <button
                     onClick={scrollLeft}
                     className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white border border-gray-300 p-2 rounded-full shadow-sm hover:bg-gray-50 z-20"
@@ -108,6 +128,21 @@ const TopCompanies = () => {
                 </button>              
                         
             </div>
+
+
+
+        {/* <button onClick={()=> prevSlid()}>prev</button>
+    {
+        companiesToShow?.length > 0 ?
+            companiesToShow.map((c,i) => (
+                <div key={i}>{c}</div>
+            ))
+        :
+        <p>loading</p>
+    }
+        
+        <button onClick={()=> nextSlide()}>next</button> */}
+
 
         </div>
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import ApplySectionShimmer from '../shimmer/ApplySectionShimmer'
+import { addJob } from '../store/applicationSlice'
 
 const ApplySection = () => {
 
@@ -12,6 +13,8 @@ const ApplySection = () => {
 
   const [jobCaregoryArray, setJobsCategoryArray] = useState([])
   const [jobFound, setJobFound] = useState(null)
+
+  const dispatch = useDispatch()
 
   // fetch jobs based on particular category
 
@@ -87,6 +90,11 @@ const ApplySection = () => {
     getJob()
   }, [id])
 
+  const appliedJobs = (job)=>{
+    console.log("clicked")
+    dispatch(addJob(job)) 
+  }
+
 
   if(loading) return <ApplySectionShimmer/>
   return (
@@ -141,6 +149,7 @@ const ApplySection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#117a5b] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#0f664b] transition duration-300"
+              onClick={()=> appliedJobs(job)}
             >
               Easy Apply
             </a>

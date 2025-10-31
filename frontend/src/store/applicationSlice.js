@@ -8,11 +8,11 @@ const jobHistorySlice = createSlice({
     },
     reducers : {
         addJob : (state, action) =>{
+            localStorage.setItem('appliedJobs', JSON.stringify(state))
             return{
                 ...state,
                 appliedJobs : [...state.appliedJobs, action.payload]
-            }
-            
+            }  
         }
     }
 })

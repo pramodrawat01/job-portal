@@ -1,11 +1,15 @@
 import React from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const AppliedHistory = () => {
 
   const { appliedJobs } = useSelector(state => state.jobHistory)
 
-  console.log(appliedJobs, "this is my history!")
+  const johHistory = JSON.parse(localStorage.getItem("appliedJobs"))
+  const [history, setHistory] = useState(johHistory || appliedJobs || [])
+
+  console.log(history, "this is my history!")
 
   return (
     <div className="p-6">
@@ -14,9 +18,9 @@ const AppliedHistory = () => {
       </h2>
 
       {
-        appliedJobs && appliedJobs.length > 0 ? (
+        history && history.appliedJobs.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-6">
-            {appliedJobs.map((job, index) => (
+            {history.appliedJobs.map((job, index) => (
               <div
                 key={job.id || index}
                 className="flex items-start gap-4 p-4 border rounded-2xl shadow-sm hover:shadow-md transition"

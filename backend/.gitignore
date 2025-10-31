@@ -1,0 +1,59 @@
+# ============================
+# 📦 Node.js / Express Backend
+# ============================
+
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs
+*.log
+
+# Build output
+dist/
+build/
+coverage/
+.tmp/
+
+# OS & Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Cache
+.cache/
+.nyc_output/
+
+# Optional lock files (if not needed)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Uploaded files (if you store user uploads locally)
+uploads/
+public/uploads/
+tmp/
+
+# PM2 / Runtime files
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Backup files
+*.bak
+*.old

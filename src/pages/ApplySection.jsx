@@ -55,8 +55,8 @@ const ApplySection = () => {
     
   }, [id, jobCaregoryArray])
 
-  console.log("all jobs found",jobCaregoryArray)
-  console.log("new job found",jobFound)
+  // console.log("all jobs found",jobCaregoryArray)
+  // console.log("new job found",jobFound)
 
 
 
@@ -157,7 +157,7 @@ const ApplySection = () => {
         </div>
       ))
     ) : (
-      <p className="text-center text-gray-600">Job may not be found</p>
+      <p className="text-center text-gray-600">loading</p>
     )}
   </div>
 </div>

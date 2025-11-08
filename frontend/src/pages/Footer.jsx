@@ -4,14 +4,16 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/
 
 const Footer = () => {
   return (
-    <footer className="bg-[#fff]  mt-10 ">
+    <footer 
+    id="footer-section"
+    className="bg-[#fff]  mt-10 bg-gradient-to-b from-white to-[#117a5b]  ">
       <div className="max-w-7xl mx-auto px-6 py-10">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row justify-between gap-10">
           {/* Left - Naukri Logo + Links */}
           <div>
             <h1 className="text-3xl font-semibold text-[#117a5b] mb-4">jobSpot</h1>
-            <ul className="text-gray-600 text-sm space-y-2">
+            <ul className="text-[#1b1a1a] text-sm space-y-2">
               <li className="hover:text-black cursor-pointer">About us</li>
               <li className="hover:text-black cursor-pointer">Careers</li>
               <li className="hover:text-black cursor-pointer">Employer home</li>
@@ -22,7 +24,7 @@ const Footer = () => {
 
           {/* Middle Links */}
           <div>
-            <ul className="text-gray-600 text-sm space-y-2 mt-8 md:mt-0">
+            <ul className="text-[#1b1a1a] text-sm space-y-2 mt-8 md:mt-0">
               <li className="hover:text-black cursor-pointer">Help center</li>
               <li className="hover:text-black cursor-pointer">Summons/Notices</li>
               <li className="hover:text-black cursor-pointer">Grievances</li>
@@ -32,7 +34,7 @@ const Footer = () => {
 
           {/* Right Links */}
           <div>
-            <ul className="text-gray-600 text-sm space-y-2 mt-8 md:mt-0">
+            <ul className="text-[#1b1a1a] text-sm space-y-2 mt-8 md:mt-0">
               <li className="hover:text-black cursor-pointer">Privacy policy</li>
               <li className="hover:text-black cursor-pointer">Terms & conditions</li>
               <li className="hover:text-black cursor-pointer">Fraud alert</li>
@@ -63,13 +65,13 @@ const Footer = () => {
         <div className="border-t border-gray-200 my-8"></div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-[#1b1a1a]">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
             <p>© 2025 Info Edge (India) Ltd. All rights reserved</p>
           </div>
 
           <div className="flex items-center gap-5">
-            <span className="font-medium text-gray-700">Our businesses</span>
+            <span className="font-medium text-[#1b1a1a]">Our businesses</span>
             {/* <div className="flex gap-4 items-center text-[#0073e6]">
               <SiIimjobs className="text-2xl" title="iimjobs" />
               <SiHirist className="text-2xl" title="Hirist" />
@@ -79,7 +81,7 @@ const Footer = () => {
         </div>
 
         {/* Social Icons */}
-        <div className="mt-6 flex gap-4 justify-center text-gray-600 text-xl">
+        <div className="mt-6 flex gap-4 justify-center text-[#1b1a1a] text-xl">
           <FaFacebookF className="hover:text-[#0073e6] cursor-pointer" />
           <FaInstagram className="hover:text-[#E4405F] cursor-pointer" />
           <FaXTwitter className="hover:text-black cursor-pointer" />

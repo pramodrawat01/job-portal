@@ -1,40 +1,3 @@
-// import React from 'react'
-
-// const UserHome = () => {
-
-
-//   const url = 'https://jsearch.p.rapidapi.com/search?query=developer%20jobs%20in%20chicago&page=1&num_pages=1&country=us&date_posted=all';
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'x-rapidapi-key': '62bb65bd21msh9f5369af392a1bdp195890jsn33d2cac32d39',
-// 		'x-rapidapi-host': 'jsearch.p.rapidapi.com'
-// 	}
-// };
-
-// const fetchData = async()=>{
-//   try {
-// 	const response = await fetch(url, options);
-// 	const result = await response.json();
-// 	console.log(result);
-// } catch (error) {
-// 	console.error(error);
-// }
-
-
-// }
-
-// fetchData()
-
-// console.log("hi")
-
-
-//   return (
-//     <div className='h-screen '>UserHome</div>
-//   )
-// }
-
-// export default UserHome
 
 
 import React, { useEffect, useRef, useState } from 'react'
@@ -58,7 +21,7 @@ const UserHome = () => {
   const dispatch = useDispatch()
   const {jobs, loading, error, categories} = useSelector(state => state.jobs)
 	
-	
+
   
 
   useEffect(() => {
@@ -97,14 +60,13 @@ const UserHome = () => {
   if(loading) return <UserHomeShimmer/>
   if(error) return <p>error :  {error}</p>
 
-
   return (
-    <div className='relative z-10  '>
+    <div className='relative z-10  w-[75vw] mx-auto mt-[80px] pt-10'>
 
     <div className='relative flex gap-4 z-10 '>
 
       <ProfileSection/>
-      <div className=' w-[600px]'>
+      <div className=' w-[800px]' id='home-section'>
 
         {/* banner section */}
         <div className='border-1 bg-gradient-to-b from-white to-[#EEFDF2] border-[#b3cac3] h-[160px] w-full shadow-md shadow-black/30 rounded-2xl flex items-center'>
@@ -124,7 +86,7 @@ const UserHome = () => {
 
       {/* category section */}
 
-        <div className="relative bg-white shadow-md shadow-black/20 rounded-2xl p-4 mt-6">
+        <div id='job-section' className="relative bg-white shadow-md shadow-black/20 rounded-2xl p-4 mt-6">
           <h2 className="text-xl font-semibold mb-3">Explore Categories</h2>
 
           {/* Left & Right Buttons */}
@@ -197,7 +159,7 @@ const UserHome = () => {
 
       </div>
 
-      <Advertise/>
+      {/* <Advertise/> */}
 
     </div>
 

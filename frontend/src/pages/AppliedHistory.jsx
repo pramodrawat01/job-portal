@@ -44,14 +44,14 @@ const AppliedHistory = () => {
                   )}
 
                   {/* Job Link */}
-                  <a
+                  {/* <a
                     href={job.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 text-sm mt-2 hover:underline"
                   >
                     View Job ↗
-                  </a>
+                  </a> */}
                 </div>
               </div>
             ))}

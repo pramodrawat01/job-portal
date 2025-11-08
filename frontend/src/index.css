@@ -3,3 +3,53 @@
 .no-scrollbar::-webkit-scrollbar {
   height: 0;            /* hide horizontal scrollbar */
 }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(15deg) ;
+    opacity: 20;
+  }
+  50% {
+    transform: translateY(-15px) rotate(15deg);
+    opacity: 100;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slideIn {
+  animation: slideInRight 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-slideOut {
+  animation: slideOutRight 0.3s cubic-bezier(0.55, 0, 0.1, 1) forwards;
+}

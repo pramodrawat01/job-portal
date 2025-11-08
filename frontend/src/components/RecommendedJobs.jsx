@@ -6,6 +6,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
 const RecommendedJobs = () => {
+
   const { jobs } = useSelector((state) => state.jobs);
   const [matched, setMatched] = useState([]);
   // console.log(jobs, "recommended jobs");
@@ -40,7 +41,7 @@ const RecommendedJobs = () => {
     "python",
   ];
 
-  const JobsMatchedWithSkills = jobs.filter((job) => {
+  const JobsMatchedWithSkills = jobs?.filter((job) => {
     let matchCount = 0;
     job.tags.forEach((j) => {
       if (keySkills.includes(j)) {

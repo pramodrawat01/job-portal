@@ -4,13 +4,10 @@ import { FiChevronRight } from "react-icons/fi";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJobs } from '../store/jobsSlice';
 
-const topHiringcompanies = [
-        "google", "microsoft", "amazon", 
-    ]
 
 const TopCompanies = () => {
 
-    console.log(topHiringcompanies, "this is top hiring companies")
+    
 
     // const [startIndex, setStartIndex] = useState(0)
     // const [companiesToShow, setCompaniesToShow] = useState([])
@@ -59,8 +56,8 @@ const TopCompanies = () => {
 
 
     const companyCount = {}
-    jobs.forEach(job => {
-        const company = job.company_name
+    jobs?.forEach(job => {
+        const company = job?.company_name
         if(company){
             companyCount[company] = (companyCount[company] || 0) + 1;
         }
@@ -80,7 +77,7 @@ const TopCompanies = () => {
 
 
     return (
-        <div className='bg-[#fff] shadow-md shadow-black/20 mt-6 p-3 h-[300px] rounded-2xl max-w-full relative '>
+        <div id='companies-section' className='bg-[#fff] shadow-md shadow-black/20 mt-6 p-3 h-[300px] rounded-2xl max-w-full relative '>
 
             <div className='text-2xl font-semibold'>Top companies</div>
 

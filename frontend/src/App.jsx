@@ -1,5 +1,5 @@
 
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -15,6 +15,11 @@ import ApplySectoin from './pages/ApplySection'
 import Footer from './pages/Footer'
 import JobsCategory from './pages/JobsCategory'
 import AppliedHistory from './pages/AppliedHistory'
+import ProtectedRoute from './components/ProtectedRoute'
+import SavedJobs from './pages/SavedJobs'
+import CompleteProfile from './pages/createProfile/CompleteProfile'
+import Step1 from './pages/createProfile/Step1'
+import Step2 from './pages/createProfile/Step2'
 
 function App() {
 
@@ -22,12 +27,14 @@ function App() {
   const isLoggedIn = useSelector(state => state.login.isLoggedIn)
   const [hideNavbar, setHideNavbar] =useState(false)
 
+  const loggedUser = JSON.parse(localStorage?.getItem('user')) || null
+  
+  // console.log(loggedUser, "logged user in app")
   const location = useLocation()
-
   
   // console.log(hideNavbar, "hidnavbar")
   useEffect(()=>{
-    if(location.pathname === '/register'){
+    if(location.pathname === '/register' || location.pathname === '/login' || location.pathname === ''){
       setHideNavbar(true)
     }
     else {
@@ -35,24 +42,64 @@ function App() {
     }
   }, [location.pathname])
 
+  const step1Marked = false
+  const step2Marked = false
+
   
   
   return (
     <div className='bg-[#F8F9FA]'>
 
-      {
+      {/* {
         isLoggedIn ? 
         <UserNavbar/>
         : 
         <Navbar />
-      } 
+      }  */}
+
+      {/* {
+        userLoggedIn ? 
+        <UserNavbar/>
+        : 
+        <Navbar />
+      }  */}
+
+        {
+          hideNavbar ?
+          <Navbar/>
+          :
+          <UserNavbar/>
+        }
+      
 
       
 
-      <div className='w-[75vw] mx-auto mt-[80px] pt-10 '>
+      <div >
 
       <Routes>
-        <Route path='/' element={ isLoggedIn ? <UserHome/> :<Home/>} />
+        
+        <Route 
+          path='/' 
+          element={ 
+            loggedUser 
+            ? 
+            <Navigate to='/userHome' replace/>
+            :
+            <Navigate to='/home' replace/>
+          } 
+        />
+
+
+        <Route path='/home' element={<Home/>} />
+        <Route
+          path='/userHome'
+          element={
+            <ProtectedRoute>
+              <UserHome/>
+            </ProtectedRoute>
+          }
+        />
+
         <Route path='/register' element={<Register/>}   />
 
         <Route path='/jobs' element={<Jobs/>}/>
@@ -61,9 +108,33 @@ function App() {
         <Route path='/login' element={<Login/>} />
 
 
-        <Route path='/jobs/:category/applyto/:id' element={ <ApplySectoin/>}/>
+
+        <Route path='/jobs/:category/applyto/:id' element={ 
+          <ProtectedRoute>
+            <ApplySectoin/>
+          </ProtectedRoute>
+        }/>
 
         <Route path='/appliedHistory' element={<AppliedHistory/>}/>
+        
+        <Route path='/savedJobs' element={
+          <ProtectedRoute>
+            <SavedJobs/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path='/user/completeProfile' element={
+          <ProtectedRoute>
+
+          {
+            step1Marked 
+              ? (step2Marked ? <Step2 /> : <CompleteProfile />)
+              : <Step1 />
+          }
+
+
+          </ProtectedRoute>
+        }/>
       </Routes>
 
       </div>
@@ -76,3 +147,7 @@ function App() {
 }
 
 export default App
+
+
+
+// step1Marked and step2Marked ko user m save krana h while signing up so we can track his profile complitation

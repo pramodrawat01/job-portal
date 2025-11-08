@@ -18,6 +18,7 @@ export const fetchJobs = createAsyncThunk(
             const data = await response.json()
             
 
+            // delay for testing
             // await new Promise(res => setTimeout(res, 10000));
 
             return data.jobs
@@ -33,6 +34,7 @@ const jobsSlice = createSlice({
     initialState : {
         jobs : [],
         categories : [],
+        featuredJobs : [],
         loading : false,
         error : false
     },
@@ -57,6 +59,33 @@ const jobsSlice = createSlice({
                     category,
                     numOfJobs: count,
                 }));
+
+                // drive featured jobs from jobs
+                const featured =
+                    action.payload.filter(
+                    (job) =>
+                        job.featured === true ||
+                        job.tags?.includes("featured") ||
+                        job.job_type?.toLowerCase().includes("featured")
+                    ).length > 0
+                    ? action.payload.filter(
+                        (job) =>
+                            job.featured === true ||
+                            job.tags?.includes("featured") ||
+                            job.job_type?.toLowerCase().includes("featured")
+                        )
+                    : [...action.payload]
+                        .sort(
+                            (a, b) =>
+                            new Date(b.publication_date) - new Date(a.publication_date)
+                        )
+                        .slice(0, 8);
+
+                // console.log(featured, "featured jobs")
+
+                state.featuredJobs = featured;
+                
+
             })
             .addCase(fetchJobs.rejected, (state, action)=>{
                 state.loading = false,

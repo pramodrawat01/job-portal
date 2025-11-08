@@ -1,14 +1,14 @@
 
 
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { data, Link, useParams } from 'react-router-dom'
 import { CiLocationOn } from "react-icons/ci";
 
 
 const jobsCategory = () => {
 
-
+  const dispatch = useDispatch()
   
   const {category} = useParams()
 
@@ -56,18 +56,22 @@ console.log("Jobs here", jobsCategory)
             className="block bg-white shadow-md rounded-xl p-4 mb-4 hover:shadow-lg transition-all duration-200 border border-gray-200 mt-4"
             >
             {/* Header row */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
                 <img
                 src={job.company_logo || ""}
                 alt="logo"
                 className="h-16 w-16 object-contain border-1 rounded-full border-[#aaaaaa]"
                 />
                 <div>
-                <h3 className="text-xl font-semibold text-black truncate">
-                    {job.title}
-                </h3>
-                <p className="text-md text-[#373737] font-semibold">{job.company_name}</p>
+                  <h3 className="text-xl font-semibold text-black truncate">
+                      {job.title}
+                  </h3>
+                  <p className="text-md text-[#373737] font-semibold">{job.company_name}</p>
                 </div>
+              </div>
+
+
             </div>
 
             {/* Tags */}

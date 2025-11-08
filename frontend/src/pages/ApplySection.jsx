@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import ApplySectionShimmer from '../shimmer/ApplySectionShimmer'
 import { addJob } from '../store/applicationSlice'
+import { saveJob } from '../store/saveJobSlice'
 
 const ApplySection = () => {
 
@@ -105,7 +106,13 @@ const ApplySection = () => {
         <div key={index} className="space-y-6">
           {/* Header section */}
           <div className="border-b border-gray-200 pb-4">
-            <h1 className="text-2xl font-bold text-gray-800">{job.title}</h1>
+            <div className='flex justify-between '>
+              <h1 className="text-2xl font-bold text-gray-800">{job.title}</h1>
+              <button onClick={() => dispatch(saveJob({ job: job }))}>
+                save
+              </button>
+            </div>
+            
             <p className="text-lg text-gray-700 mt-1">{job.company_name}</p>
             <p className="text-sm text-gray-500">{job.category}</p>
           </div>

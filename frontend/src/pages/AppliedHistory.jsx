@@ -12,7 +12,7 @@ const AppliedHistory = () => {
   console.log(history, "this is my history!")
 
   return (
-    <div className="p-6">
+    <div className="p-6 mt-[100px] min-h-[400px]">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         Companies You Have Applied To 
       </h2>

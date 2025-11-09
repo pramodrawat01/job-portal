@@ -24,8 +24,8 @@ const SavedJobs = () => {
   }
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">Saved Jobs</h2>
+    <div className="mt-[100px] min-h-[400px]">
+      <h2 className="text-xl font-semibold mb-4 ">Saved Jobs</h2>
       {savedJobs.length > 0 ? (
         savedJobs.map((job, i) => (
           <div key={i} className="p-2 border-b border-gray-200">

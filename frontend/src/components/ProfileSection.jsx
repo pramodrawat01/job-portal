@@ -4,6 +4,7 @@ import { IoHome } from "react-icons/io5";
 import { PiBagFill } from "react-icons/pi";
 import { BsBuildings } from "react-icons/bs";
 import { IoBookSharp } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 
 const ProfileSection = () => {
@@ -106,9 +107,11 @@ const ProfileSection = () => {
           {profile.email || "Email not added"}
         </p>
 
-        <button className="text-sm text-white bg-[#117a5b] px-4 py-2 rounded-4xl font-medium hover:underline my-4">
+        <Link
+        to='/user/completeProfile' 
+        className="text-sm text-white bg-[#117a5b] px-4 py-2 rounded-4xl font-medium hover:underline my-4">
           Complete Profile
-        </button>
+        </Link>
 
         
 

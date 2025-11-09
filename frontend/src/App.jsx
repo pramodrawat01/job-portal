@@ -20,6 +20,7 @@ import SavedJobs from './pages/SavedJobs'
 import CompleteProfile from './pages/createProfile/CompleteProfile'
 import Step1 from './pages/createProfile/Step1'
 import Step2 from './pages/createProfile/Step2'
+import Step3 from './pages/createProfile/Step3'
 
 function App() {
 
@@ -42,8 +43,12 @@ function App() {
     }
   }, [location.pathname])
 
-  const step1Marked = false
-  const step2Marked = false
+
+
+  /// these steps will be tacked in user's profile 
+  const step1Marked = true
+  const step2Marked = true
+  const step3Marked = false;
 
   
   
@@ -128,7 +133,11 @@ function App() {
 
           {
             step1Marked 
-              ? (step2Marked ? <Step2 /> : <CompleteProfile />)
+              ? (step2Marked ? 
+                ( step3Marked ? <CompleteProfile/> : <Step3/> ) 
+                
+                : <Step2/>)
+
               : <Step1 />
           }
 
@@ -151,3 +160,14 @@ export default App
 
 
 // step1Marked and step2Marked ko user m save krana h while signing up so we can track his profile complitation
+
+/***
+ * 
+ * agar signedUpUser h to step1 par jaye ---> verify mobile number hai 
+ * once done this mark step1Marked : ture
+ * 
+ * then move to step2 to fill the educational details 
+ * once done this step mark step2Marked : ture
+ * 
+ * then move to complete prorile to fill the final details like resume upload + add headline and preferences
+ */

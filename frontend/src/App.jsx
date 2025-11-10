@@ -47,7 +47,7 @@ function App() {
 
   /// these steps will be tacked in user's profile 
   const step1Marked = true
-  const step2Marked = true
+  const step2Marked = false
   const step3Marked = false;
 
   

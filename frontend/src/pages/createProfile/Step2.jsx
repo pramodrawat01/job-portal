@@ -61,7 +61,7 @@ const Step2 = () => {
             {/* Course */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Course<span className="text-red-500">*</span>
+                Course Name<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -128,16 +128,7 @@ const Step2 = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Grading System<span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                placeholder="scale 10 grading system"  
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
+            
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -158,6 +149,28 @@ const Step2 = () => {
                 type="text"
                 placeholder="key skills are crucial for recruiters to hire you"  
                 className="w-full border border-gray-300 rounded-lg p-2 py-4 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Upload Your Resume<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="file"
+                placeholder="upload your resime"  
+                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Add your Portfolio Link
+              </label>
+              <input
+                type="text"
+                placeholder="add your portfolio"  
+                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
 

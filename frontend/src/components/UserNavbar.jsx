@@ -27,7 +27,7 @@ const UserNavbar = () => {
   // console.log(filteredJobs, "job matched")
 
   useEffect(() => {
-    let filteredArray = jobs
+     let filteredArray = jobs
       ?.filter((job) => {
         const title = job.title.toLowerCase().includes(text.toLowerCase());
 

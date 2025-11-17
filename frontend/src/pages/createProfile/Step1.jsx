@@ -1,19 +1,57 @@
 import React, { useState } from "react";
 import { FiPhone, FiCheckCircle } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyOtp } from "../../store/signupSlice";
 
 const RegisterPhone = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
 
-  const handleVerify = () => {
+  const dispatch = useDispatch()
+
+  const {name, id} =useSelector(state => state.signup?.user)
+  console.log(name, id,  "this is user ")
+
+  // generate otp and sent it to entered mobile number 
+  const handleVerify = async() => {
+
     setOtpSent(true);
   };
 
-  const handleOtpSubmit = (e) => {
-    e.preventDefault();
-    setIsVerified(true);
-  };
+  // verify otp 
+  const handleVerifyOtp = async() =>{
+    // try {
+
+    //   const res = await fetch('http://localhost:3000/v1/verify_otp', {
+    //     method : "POST",
+    //     headers : {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body : JSON.stringify({otp, id : id})
+    //   })
+
+
+    //   const data = await res.json()
+
+    //   if(res.status = 200){
+    //     alert(data.message)
+    //     dispatch(verifyOtp())
+    //   }
+    // } catch (error) {
+    //   console.log('otp verification failed ! try again')
+    // }
+
+
+    dispatch(verifyOtp())
+
+    
+  }
+
+  // const handleOtpSubmit = (e) => {
+  //   e.preventDefault();
+  //   setIsVerified(true);
+  // };
 
   return (
     <div className="flex justify-center gap-12 items-center min-h-screen bg-gradient-to-t from-green-100 via-green-50 to-white text-gray-800 px-10 mt-[120px]">
@@ -52,7 +90,7 @@ const RegisterPhone = () => {
           Enter your mobile number to receive an OTP for verification.
         </p>
 
-        <form onSubmit={handleOtpSubmit} className="w-full space-y-5">
+        <form  className="w-full space-y-5">
           {/* Mobile Number Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -100,6 +138,7 @@ const RegisterPhone = () => {
               </div>
               <button
                 type="submit"
+                onClick={()=> handleVerifyOtp()}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition duration-200"
               >
                 Verify OTP

@@ -33,7 +33,7 @@ const Companies = () => {
   ];
 
   return (
-    <div className="mt-[100px] px-10">
+    <div className="mt-[130px] px-[100px] mb-[200px]">
       <h2 className="text-3xl font-semibold mb-8 text-gray-800">
         Top Companies Hiring 
       </h2>

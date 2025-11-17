@@ -2,7 +2,7 @@ import React from "react";
 
 const ApplySectionShimmer = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center">
+    <div className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center mt-[100px]">
       <div className="bg-white w-full max-w-3xl shadow-md rounded-2xl p-8 animate-pulse">
         {/* Header shimmer */}
         <div className="border-b border-gray-200 pb-6 mb-6">

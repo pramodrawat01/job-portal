@@ -4,19 +4,49 @@ import { addUser } from "../store/loginSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [userLogin, setUserLogin] = useState({
+    email : "",
+    password : ""
+  })
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-    if (email && password) {
-      dispatch(addUser({ email }));
-      console.log("User logged in:", email);
-    } else {
-      alert("Please fill both fields");
+
+    if(!userLogin.email || !userLogin.password ){
+      return alert("add details first !")
+    } 
+
+    // console.log(userLogin)
+
+    try {
+      const res = await fetch('http://localhost:3000/v1/login', {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        credentials : "include",
+        body : JSON.stringify(userLogin)
+      })
+
+      const data = await res.json()
+
+      if(res.ok){
+        dispatch(addUser(data.user))
+        navigate('/user/completeProfile')
+      }
+    } catch (error) {
+      console.log(error, "error in login")
     }
+
+    // if (email && password) {
+    //   dispatch(addUser({ email }));
+    //   console.log("User logged in:", email);
+    // } else {
+    //   alert("Please fill both fields");
+    // }
   };
 
   return (
@@ -30,16 +60,16 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userLogin.email}
+            onChange={(e) => setUserLogin( prev => ({...prev, email : e.target.value}))}
             className="border border-green-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
           />
 
           <input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={userLogin.password}
+            onChange={(e) => setUserLogin( prev => ( { ...prev, password : e.target.value}))}
             className="border border-green-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
           />
 

@@ -21,19 +21,19 @@ const ProfileSection = () => {
   };
 
 
-  const {profile} = useSelector(state => state.signup)
+  const profile = useSelector(state => state.signup?.user)
   console.log(profile, "this is user profile")
 
   function calculateProfileCompletion(){
     let totalFields = 8;
     let completed = 0;
-    if (profile.name && profile.email && profile.phone) completed++;
-    if (profile.education.length > 0) completed++;
-    if (profile.experience.length > 0) completed++;
-    if (profile.skills.length > 0) completed++;
-    if (profile.resume) completed++;
-    if (profile.profilePic) completed++;
-    if (Object.keys(profile.socialLinks).length > 0) completed++;
+    if (profile?.name && profile?.email && profile?.phone) completed++;
+    if (profile?.education?.length > 0) completed++;
+    if (profile?.experience?.length > 0) completed++;
+    if (profile?.skills?.length > 0) completed++;
+    if (profile?.resume) completed++;
+    if (profile?.profilePic) completed++;
+    // if (Object.keys(profile?.socialLinks)?.length > 0) completed++;
 
     return Math.round((completed/ totalFields) * 100);
 
@@ -100,7 +100,7 @@ const ProfileSection = () => {
         </h2>
         
         <p className=" text-[#1e1e1e] mb-1">
-          {profile.jobProfile.slice(0,1)}
+          {/* {profile.jobProfile.slice(0,1)} */}
         </p>
 
         <p className="text-sm text-gray-500 mb-1">

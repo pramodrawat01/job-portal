@@ -43,7 +43,7 @@ const userSchema = new Schema({
         required : [true, "password is required"],
         minlength : [6, "password must be at least 6 characters long"]
     },
-    role : {
+    workStatus : {
         type : String,
         enum : ["fresher", "experienced"],
         required : true

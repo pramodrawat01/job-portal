@@ -43,12 +43,20 @@ function App() {
     }
   }, [location.pathname])
 
+  const {step1Completed, step2Completed, step3Completed } = useSelector(state => state.signup.user)
 
+  console.log(step1Completed, step2Completed, step3Completed, "these are steps")
 
-  /// these steps will be tacked in user's profile 
-  const step1Marked = true
-  const step2Marked = false
-  const step3Marked = false;
+  // let step1Marked = false
+  // /// these steps will be tacked in user's profile 
+  // if(JSON.parse(localStorage.getItem('user'))){
+  //   const user = JSON.parse(localStorage.getItem('user'))
+  //   step1Marked : user.step1Completed
+
+  // }
+  
+  // const step2Marked = false
+  // const step3Marked = false;
 
   
   
@@ -129,20 +137,20 @@ function App() {
         }/>
 
         <Route path='/user/completeProfile' element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
 
-          {
-            step1Marked 
-              ? (step2Marked ? 
-                ( step3Marked ? <CompleteProfile/> : <Step3/> ) 
+          // {
+            step1Completed || JSON.parse(localStorage.getItem('step1Completed')) 
+              ? (step2Completed ? 
+                ( step3Completed ? <CompleteProfile/> : <Step3/> ) 
                 
                 : <Step2/>)
 
-              : <Step1 />
-          }
+              : <Step1 />                                           
+          // }
 
 
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }/>
       </Routes>
 
@@ -170,4 +178,14 @@ export default App
  * once done this step mark step2Marked : ture
  * 
  * then move to complete prorile to fill the final details like resume upload + add headline and preferences
+ * 
+ * and protected route ko backend se verify krenge completeProfile : true or false se 
+ * 
+ * 
+ * protected route m token check krenge from local storage and
+ * 
+ * step 1 ko otp verify krne ke bad true karna hai 
+ * 
+ * now one thing to do is change reister button  to complete profile  in navbar
+ * and then navigate to otp verify page
  */

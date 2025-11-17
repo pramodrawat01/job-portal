@@ -4,9 +4,9 @@ const UserHomeShimmer = () => {
   const shimmerCards = Array(3).fill(null); // number of loading cards
 
   return (
-    <div className="p-4 w-full h-full">
+    <div className="p-4 px-[200px] mt-[100px] w-full h-full">
       {/* Shimmer header */}
-      <div className="h-6 w-56 bg-gray-200 rounded-md mb-6 animate-pulse"></div>
+      {/* <div className="h-6 w-56 bg-gray-200 rounded-md mb-6 animate-pulse"></div> */}
 
       {/* Shimmer cards container */}
 <div className="flex gap-6 overflow-x-auto">

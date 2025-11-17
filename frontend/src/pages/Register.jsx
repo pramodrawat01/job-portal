@@ -1,119 +1,3 @@
-// import React, { useEffect, useState } from 'react'
-// import {auth, provider} from '../firebase'
-// import { signInWithPopup, signOut } from 'firebase/auth'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { addUser, removeUser } from '../store/loginSlice'
-
-// const Register = () => {
-
-//   const [signedUpUser, setSignedUpUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
-//   const dispatch = useDispatch()
-
-//   const {isLoggedIn} = useSelector(state => state.login)
-
-//   const handleSignup = async()=>{
-//     let res = await signInWithPopup(auth, provider)
-//     const user = res.user;
-//     console.log(user)
-
-//     setSignedUpUser(user)
-//     localStorage.setItem("user", JSON.stringify(user))
-
-//     dispatch(addUser({user}))
-
-//   }
-
-// // const handleSignup = async () => {
-// //   try {
-// //     // Firebase popup login
-// //     const res = await signInWithPopup(auth, provider);
-// //     const user = res.user;
-// //     console.log("Logged in user:", user);
-
-// //     // State + localStorage update
-// //     setSignedUpUser(user);
-// //     localStorage.setItem("user", JSON.stringify(user));
-
-// //     // Redux store update
-// //     dispatch(addUser(user));
-
-// //     // (Optional) success message
-// //     toast.success(`Welcome ${user.displayName || "User"}!`);
-// //   } 
-// //   catch (error) {
-// //     // Popup closed by user (very common, not a real error)
-// //     if (error.code === "auth/popup-closed-by-user") {
-// //       console.warn("User closed the Google Sign-In popup before completing login.");
-// //     } 
-// //     // Popup blocked by browser
-// //     else if (error.code === "auth/cancelled-popup-request") {
-// //       console.warn("Popup request was cancelled, probably due to multiple clicks.");
-// //     } 
-// //     // Network issue or invalid setup
-// //     else {
-// //       console.error("Firebase login error:", error);
-// //       toast.error("Login failed. Please try again.");
-// //     }
-// //   }
-// // };
-
-
-//   useEffect(()=>{
-//     console.log(isLoggedIn, "logged user from store")
-//   }, [isLoggedIn])
-
-//   const handleSignout = async()=>{
-//     await signOut(auth)
-
-//     localStorage.removeItem("user")
-//     setSignedUpUser(null)
-
-//     dispatch(removeUser())
-
-//   }
-
-
-//   // useEffect(()=>{
-//   //   dispatch(removeUser())
-//   // }, [isLoggedIn])  
-
-  
-  
-
-//   return (
-//     <div className='mt-[100px]'>
-//     <div>Register page</div>
-
-//     {
-//       signedUpUser !== null  ? 
-
-//       <button 
-//       className='border-1 px-6 py-1 rounded-sm'
-//       onClick={() => handleSignout()}> signout</button>
-       
-//       : 
-//        <button onClick={()=> handleSignup()}>signup with google</button>
-//     }
-
-      
-//     </div>
-//   )
-// }
-
-// export default Register
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import React, { useEffect, useState } from "react";
 import { auth, provider } from "../firebase";
@@ -123,19 +7,27 @@ import { addUser, removeUser } from "../store/loginSlice";
 import Step1 from "./createProfile/Step1";
 import { Link, Navigate } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
+import { updatePersonalInfo } from "../store/signupSlice";
 
 
 const Register = () => {
   const [signedUpUser, setSignedUpUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState(
+    { name: "", 
+      email: "", 
+      password: "",
+      workStatus : "",
+      sendUpdates : false
+    }
+  );
 
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.login);
 
   const [passwordErr, setPasswordErr] = useState(false)
-   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
 
   const handleSignup = async () => {
     let res = await signInWithPopup(auth, provider);
@@ -145,16 +37,60 @@ const Register = () => {
     dispatch(addUser({ user }));
   };
 
-  const handleManualRegister = (e) => {
-    e.preventDefault();
-    if (formData.name && formData.email && formData.password) {
-      localStorage.setItem("user", JSON.stringify(formData));
-      dispatch(addUser(formData));
-      setSignedUpUser(formData);
-      console.log("Registered manually:", formData);
-    } else {
-      alert("Please fill all fields");
-    }
+  const handleManualRegister = async(e) => {
+     e.preventDefault();
+     localStorage.removeItem('step1Completed')
+     console.log(selectedStatus, "this is selected status")
+     if(selectedStatus) {
+       formData.workStatus = selectedStatus
+     }
+
+     if (!formData.name || !formData.email || !formData.password || !formData.workStatus){
+       return alert("fill all req fields first")
+     }
+
+     try {
+      const res = await fetch('http://localhost:3000/v1/register', {
+        method : "POST",
+        headers : {
+          "Content-Type": "application/json",
+        },
+        credentials : "include",
+        body : JSON.stringify(formData),
+        
+      })
+      const data = await res.json()
+      
+      if(res.status === 400){
+        return alert(data.message)
+      }
+
+      if(res.status === 201 ){
+        setSignedUpUser(data.user);
+        console.log(data.user, "user logged in")
+        // localStorage.setItem('user', JSON.stringify(data.user))
+        dispatch(updatePersonalInfo(data.user))
+        // localStorage.setItem('step1Completed', JSON.stringify(true))
+
+      }
+      
+     } catch (error) {
+      
+     }
+
+    //  console.log(formData, "registerd this user")
+    //  alert("user has to register")
+
+
+
+    // if (formData.name && formData.email && formData.password) {
+    //   // localStorage.setItem("user", JSON.stringify(formData));
+    //   // dispatch(addUser(formData));
+    //   // setSignedUpUser(formData);
+    //   console.log("Registered manually:", formData);
+    // } else {
+    //   alert("Please fill all fields");
+    // }
   };
 
   const handleSignout = async () => {
@@ -168,89 +104,9 @@ const Register = () => {
     console.log(isLoggedIn, "logged user from store");
   }, [isLoggedIn]);
 
+
+
   return (
-    // <div className="flex justify-center items-center min-h-screen bg-gradient-to-t from-green-100 via-green-50 to-white text-gray-800">
-    //   <div className="bg-white shadow-lg rounded-2xl p-10 w-[380px] text-center border border-green-100">
-    //     <h2 className="text-3xl font-semibold text-green-800 mb-6">
-    //       Register in <span className="font-bold family-sarif">JobSpot</span>
-    //     </h2>
-    //     <p>already have an account ? <Link to='/login' className="text-green-800 font-semibold">login here</Link></p>
-
-    //     {signedUpUser ? (
-    //       <>
-    //         <Step1/>
-
-    //         {/* <p className="text-gray-600 mb-4">
-    //           Welcome,{" "}
-    //           <span className="font-medium text-green-800">
-    //             {signedUpUser.displayName || signedUpUser.name || "User"}
-    //           </span>
-    //         </p>
-    //         <button
-    //           onClick={handleSignout}
-    //           className="bg-green-800 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-700 transition-all duration-200"
-    //         >
-    //           Sign Out
-    //         </button> */}
-    //       </>
-    //     ) : (
-    //       <>
-    //         {/* Manual Register */}
-    //         <form onSubmit={handleManualRegister} className="flex flex-col gap-4 mb-6">
-    //           <input
-    //             type="text"
-    //             placeholder="Full Name"
-    //             value={formData.name}
-    //             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-    //             className="border border-green-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
-    //           />
-
-    //           <input
-    //             type="email"
-    //             placeholder="Email"
-    //             value={formData.email}
-    //             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-    //             className="border border-green-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
-    //           />
-
-    //           <input
-    //             type="password"
-    //             placeholder="Password"
-    //             value={formData.password}
-    //             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-    //             className="border border-green-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
-    //           />
-
-    //           <button
-    //             type="submit"
-    //             className="bg-green-800 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-700 transition-all duration-200"
-    //           >
-    //             Register
-    //           </button>
-    //         </form>
-
-    //         <div className="flex items-center gap-2 mb-6">
-    //           <div className="h-px bg-gray-300 w-full" />
-    //           <span className="text-gray-500 text-sm">or</span>
-    //           <div className="h-px bg-gray-300 w-full" />
-    //         </div>
-
-    //         {/* Google Signup */}
-    //         <button
-    //           onClick={handleSignup}
-    //           className="flex items-center justify-center gap-2 bg-white border border-green-300 text-green-800 px-6 py-2 rounded-lg font-medium hover:bg-green-100 transition-all duration-200 w-full"
-    //         >
-    //           <img
-    //             src="https://cdn-icons-png.flaticon.com/512/281/281764.png"
-    //             alt="Google"
-    //             className="w-5 h-5"
-    //           />
-    //           Sign up with Google
-    //         </button>
-    //       </>
-    //     )}
-    //   </div>
-    // </div>
 
     <div className="flex justify-center gap-12 items-center min-h-screen bg-gradient-to-t from-green-100 via-green-50 to-white text-gray-800 px-10 mt-[120px]">
 
@@ -298,6 +154,8 @@ const Register = () => {
                 Full Name<span className="text-red-700">*</span>
               </label>
               <input
+                value={formData.name}
+                onChange={(e)=> {setFormData( prev =>({...prev, name : e.target.value }))}}
                 type="text"
                 placeholder="Enter your full name"
                 className="outline-none p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-800 focus:border-green-800"
@@ -307,6 +165,8 @@ const Register = () => {
                 Email ID<span className="text-red-700">*</span>
               </label>
               <input
+              value={formData.email}
+              onChange={(e)=> {setFormData(prev => ({...prev, email : e.target.value}))}}
                 type="email"
                 placeholder="Enter your email"
                 className="outline-none p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-800 focus:border-green-800"
@@ -316,6 +176,7 @@ const Register = () => {
                 Password<span className="text-red-700">*</span>
               </label>
               <input
+                value={formData.password}
                 type="password"
                 placeholder="Enter a secure password"
                 className="outline-none p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-800 focus:border-green-800"
@@ -323,6 +184,7 @@ const Register = () => {
                   setPasswordErr(
                     e.target.value.length < 6 ? "Password must be at least 6 characters" : ""
                   );
+                  setFormData( prev => ({...prev, password : e.target.value}))
                 }}
               />
               {passwordErr && (
@@ -337,7 +199,8 @@ const Register = () => {
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div
-                  onClick={() => setSelectedStatus("experienced")}
+                  onClick={() => 
+                   setSelectedStatus("experienced")}
                   className={`p-4 border rounded-xl cursor-pointer transition-all duration-200 ${
                     selectedStatus === "experienced"
                       ? "border-green-800 bg-green-50 shadow-sm"
@@ -367,7 +230,9 @@ const Register = () => {
             </div>
 
             {/* Checkbox */}
-            <label className="mt-6 flex  items-center gap-2 cursor-pointer select-none">
+            <label 
+            onClick={()=> setFormData(prev => ({...prev,  sendUpdates : true }))}
+            className="mt-6 flex  items-center gap-2 cursor-pointer select-none">
               <input type="checkbox" className="mt-[2px]" />
               <span className="text-sm text-gray-600">
                 Send me important updates & promotions via SMS, email, and WhatsApp
@@ -388,21 +253,23 @@ const Register = () => {
               of JobSpot.com
             </p>
 
-            <button className="mt-6 w-full bg-green-800 hover:bg-green-900 text-white py-3 rounded-md font-medium transition-all duration-300 shadow-md">
+            <button
+            onClick={(e) => handleManualRegister(e)}
+             className="mt-6 w-full bg-green-800 hover:bg-green-900 text-white py-3 rounded-md font-medium transition-all duration-300 shadow-md">
               Register
             </button>
 
             <div className="flex justify-center mt-4">or</div>
 
             <button
-            onClick={()=> handleSignup()}
+              onClick={()=> handleSignup()}
              className="mt-4 w-full bg-green-800 hover:bg-green-900 text-white py-3 rounded-md font-medium transition-all duration-300 shadow-md">
               signup with google
             </button>
           </div>
         :
 
-       <Navigate to='/user/completeProfile'/>
+       <Navigate to='/user/completeProfile' />
 
 
       }

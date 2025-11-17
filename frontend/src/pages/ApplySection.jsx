@@ -97,9 +97,17 @@ const ApplySection = () => {
   }
 
 
+  const handleSave = ()=> {
+    alert('job saved !')
+    dispatch(saveJob({ job: job }))
+  }
+  
+        
+
+
   if(loading) return <ApplySectionShimmer/>
   return (
-   <div className="min-h-screen bg-gray-50 py-1 px-4 flex justify-center">
+   <div className="min-h-screen bg-gray-50 py-1 flex justify-center mt-[120px] px-[150px]">
   <div className="bg-white w-full  shadow-md rounded-2xl p-8">
     {jobFound && jobFound.length > 0 ? (
       jobFound.map((job, index) => (
@@ -107,8 +115,11 @@ const ApplySection = () => {
           {/* Header section */}
           <div className="border-b border-gray-200 pb-4">
             <div className='flex justify-between '>
-              <h1 className="text-2xl font-bold text-gray-800">{job.title}</h1>
-              <button onClick={() => dispatch(saveJob({ job: job }))}>
+              <h1 className="text-2xl font-bold text-gray-800 ">{job.title}</h1>
+              <button
+              className='cursor-pointer border-1 px-4 rounded-md border-[#d0d0d0] hover:border-[#525252] transition duration-300'
+               onClick={() => handleSave() } 
+             >
                 save
               </button>
             </div>

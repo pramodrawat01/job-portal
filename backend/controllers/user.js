@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken'
 export const registerUser = async (req, res, next) => {
     try {
         
-        const { name, email, password, role } = req.body;
-      
-        if (!name || !email || !password || !role) {
+        const { name, email, password, workStatus } = req.body;
+        // console.log(req.body)
+        if (!name || !email || !password || !workStatus) {
           const err = new Error("Fill all details first to register !");
           err.status = 400;
           throw err;
@@ -36,8 +36,8 @@ export const registerUser = async (req, res, next) => {
           name,
           email,
           hashedPassword,
-          role,
-          step1Completed : true
+          workStatus,
+        //   step1Completed : true
         });
       
         await user.save();
@@ -49,8 +49,8 @@ export const registerUser = async (req, res, next) => {
                 id : user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role,
-                step1Completed : true
+                workStatus: user.workStatus,
+                // step1Completed : true
             }
         });
       
@@ -58,6 +58,35 @@ export const registerUser = async (req, res, next) => {
         next(error)
     }
 };
+
+
+export const registerEducation = async(req, res, next) => {
+    const { id, highest_qualification, course, course_type, specialization, university, starting_year, passing_year, cgpa, key_skills, resume, portfolio} = req.body.fd
+
+    if(!highest_qualification || !course || !course_type || !specialization || !university || !starting_year || !passing_year || !key_skills || !resume){
+        const err = new Error("require fields are missings...!")
+        err.status = 401
+        throw err
+    }
+
+    let resumeUrl = " ";
+    if(req.file){
+        const result =  await cloudinary.uploader.upload(req.file.path, {
+            folder : 'uploads'
+        })
+
+        resumeUrl = result.secure_url
+        fs.unlink(req.file.path, (err)=>{
+            console.log(err)
+        })
+    }
+
+    
+
+
+
+
+}
 
 export const loginUser = async (req, res) => {
     const {user} = req.body;
@@ -79,8 +108,8 @@ export const loginUser = async (req, res) => {
                     id : user._id,
                     name: user.name,
                     email: user.email,
-                    role: user.role,
-                    step1Completed : true
+                    workStatus: user.workStatus,
+                    // step1Completed : true
                 }
             })
         

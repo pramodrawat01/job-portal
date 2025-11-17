@@ -12,13 +12,13 @@ const AppliedHistory = () => {
   console.log(history, "this is my history!")
 
   return (
-    <div className="p-6 mt-[100px] min-h-[400px]">
+    <div className=" mt-[100px] min-h-[400px] px-[120px]">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         Companies You Have Applied To 
       </h2>
 
       {
-        history && history.appliedJobs.length > 0 ? (
+        history && history?.appliedJobs?.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-6">
             {history.appliedJobs.map((job, index) => (
               <div

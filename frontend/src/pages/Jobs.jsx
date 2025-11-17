@@ -23,7 +23,7 @@ const Jobs = () => {
   const visibleJobs = jobs?.slice(0, visibleCount);
 
   return (
-    <div className="p-6 bg-[#f8f9fa] min-h-screen mt-[100px] ">
+    <div className="p-6 bg-[#f8f9fa] min-h-screen mt-[100px] px-[100px] ">
       <h2 className="text-2xl font-semibold mb-6 text-[#117a5b]">
         💼 All Jobs
       </h2>

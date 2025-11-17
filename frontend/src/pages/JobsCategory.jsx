@@ -33,9 +33,9 @@ const jobsCategory = () => {
 console.log("Jobs here", jobsCategory)
 
   return (
-    <div>
+    <div className='px-[100px]'>
 
-    <div className='mt-[10px] text-3xl font-semibold'>Find Jobs related to {decodedCategory}</div>
+    <div className='mt-[130px]  text-3xl font-semibold '>Find Jobs related to {decodedCategory}</div>
 
       {
         jobsCategory.length > 0  && 
@@ -53,7 +53,7 @@ console.log("Jobs here", jobsCategory)
          
           <div
       
-            className="block bg-white shadow-md rounded-xl p-4 mb-4 hover:shadow-lg transition-all duration-200 border border-gray-200 mt-4"
+            className="block bg-white shadow-md rounded-xl p-4 mb-4 hover:shadow-lg transition-all duration-200 border border-gray-200 mt-8"
             >
             {/* Header row */}
             <div className="flex items-center justify-between">

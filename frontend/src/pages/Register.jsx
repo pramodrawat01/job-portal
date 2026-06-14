@@ -5,9 +5,10 @@ import { signInWithPopup, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../store/loginSlice";
 import Step1 from "./createProfile/Step1";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
 import { updatePersonalInfo } from "../store/signupSlice";
+import { getMe } from "../services/api.service";
 
 
 const Register = () => {
@@ -22,6 +23,8 @@ const Register = () => {
       sendUpdates : false
     }
   );
+
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.login);
@@ -50,7 +53,7 @@ const Register = () => {
      }
 
      try {
-      const res = await fetch('http://localhost:3000/v1/register', {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/v1/register`, {
         method : "POST",
         headers : {
           "Content-Type": "application/json",
@@ -104,6 +107,20 @@ const Register = () => {
     console.log(isLoggedIn, "logged user from store");
   }, [isLoggedIn]);
 
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const data = await getMe();
+        if (data?.success && data?.user) {
+          setSignedUpUser(data.user); // set the already-logged-in user
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, []);
 
 
   return (
@@ -267,11 +284,81 @@ const Register = () => {
               signup with google
             </button>
           </div>
-        :
+        :(
+  // ✅ NEW: Show user info card instead of form
+  <div className="w-[700px] bg-white rounded-2xl shadow-md border border-green-100 p-10">
+    <h2 className="text-3xl font-semibold text-green-800 mb-1">
+      Welcome back, <span className="font-serif">{signedUpUser.name}</span> 👋
+    </h2>
+    <p className="text-gray-500 mb-8">
+      You're already registered. Proceed to verify your email.
+    </p>
 
-       <Navigate to='/user/completeProfile' />
+    <div className="flex flex-col gap-5">
+      {/* Name */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-500 mb-1">Full Name</label>
+        <div className="p-3 bg-gray-50 border border-gray-200 rounded-md text-gray-800 font-medium">
+          {signedUpUser.name}
+        </div>
+      </div>
 
+      {/* Email */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-500 mb-1">Email ID</label>
+        <div className="p-3 bg-gray-50 border border-gray-200 rounded-md text-gray-800 flex items-center justify-between">
+          <span>{signedUpUser.email}</span>
+          {signedUpUser.isEmailVerified ? (
+            <span className="text-green-700 text-sm flex items-center gap-1">
+              <FiCheckCircle size={15} /> Verified
+            </span>
+          ) : (
+            <span className="text-orange-500 text-sm">Not verified</span>
+          )}
+        </div>
+      </div>
 
+      {/* Work Status */}
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-500 mb-1">Work Status</label>
+        <div className="p-3 bg-gray-50 border border-gray-200 rounded-md text-gray-800 capitalize">
+          {signedUpUser.workStatus}
+        </div>
+      </div>
+
+      {/* Profile Steps */}
+      <div className="flex flex-col gap-2 mt-2">
+        <label className="text-sm font-medium text-gray-500">Profile Completion</label>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { label: "Step 1", done: signedUpUser.step1Completed },
+            { label: "Step 2", done: signedUpUser.step2Completed },
+            { label: "Step 3", done: signedUpUser.step3Completed },
+          ].map(({ label, done }) => (
+            <div
+              key={label}
+              className={`p-3 rounded-xl border text-center text-sm font-medium ${
+                done
+                  ? "bg-green-50 border-green-700 text-green-800"
+                  : "bg-gray-50 border-gray-200 text-gray-400"
+              }`}
+            >
+              {done ? <FiCheckCircle className="inline mr-1" /> : "○"} {label}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Next button → goes to email verify or completeProfile */}
+    <button
+      onClick={() => navigate('/user/completeProfile')}
+      className="mt-8 w-full bg-green-800 hover:bg-green-900 text-white py-3 rounded-md font-medium transition-all duration-300 shadow-md"
+    >
+      Next →
+    </button>
+  </div>
+)
       }
 
       

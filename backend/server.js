@@ -10,8 +10,14 @@ import otpRoutes from "./routes/otp.js";
 
 const app = express()
 dotenv.config()
+// const result = dotenv.config();
+
+// console.log(result);
+// console.log(process.cwd());
+
 dbConnect()
 const PORT = process.env.PORT
+
 
 app.use(
     cors({
@@ -23,8 +29,8 @@ app.use(
 app.use(express.json())
 app.use(cookieParser())
 
-app.use('/v1/', userRoutes)
-app.use('/v1/', otpRoutes)
+app.use('/api/v1', userRoutes)
+app.use('/api/v1', otpRoutes)
 
 
 

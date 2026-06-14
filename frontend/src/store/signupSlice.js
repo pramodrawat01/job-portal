@@ -66,6 +66,7 @@ const initialState = {
     step2Completed: false,
     step3Completed: false,
     profileCompleted: false,
+    isEmailVerified : false,
   },
 };
 
@@ -82,7 +83,8 @@ const signupSlice = createSlice({
       state.user.workStatus = workStatus;
     },
     verifyOtp : (state, action)=>{
-        state.user.step1Completed  = true
+        state.user.step1Completed  = true,
+        state.user.isEmailVerified  = true
     },
 
     // update education

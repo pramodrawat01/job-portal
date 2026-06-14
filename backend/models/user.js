@@ -50,6 +50,10 @@ const userSchema = new Schema({
     },
     education : educationSchema,
     experience : experienceSchema, 
+    isEmailVerified : {
+        type : Boolean,
+        default : false,
+    },
 
     // Step progress flags
     step1Completed: { type: Boolean, default: false },

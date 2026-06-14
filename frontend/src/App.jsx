@@ -21,8 +21,13 @@ import CompleteProfile from './pages/createProfile/CompleteProfile'
 import Step1 from './pages/createProfile/Step1'
 import Step2 from './pages/createProfile/Step2'
 import Step3 from './pages/createProfile/Step3'
+import { ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
+import { useAuthUser } from './hooks/useAuthUser'
 
 function App() {
+
+  const {user, loading} = useAuthUser()
 
 
   const isLoggedIn = useSelector(state => state.login.isLoggedIn)
@@ -45,7 +50,7 @@ function App() {
 
   const {step1Completed, step2Completed, step3Completed } = useSelector(state => state.signup.user)
 
-  console.log(step1Completed, step2Completed, step3Completed, "these are steps")
+  //console.log(step1Completed, step2Completed, step3Completed, "these are steps")
 
   // let step1Marked = false
   // /// these steps will be tacked in user's profile 
@@ -62,6 +67,7 @@ function App() {
   
   return (
     <div className='bg-[#F8F9FA]'>
+    <ToastContainer/>
 
       {/* {
         isLoggedIn ? 
@@ -136,9 +142,8 @@ function App() {
           </ProtectedRoute>
         }/>
 
-        <Route path='/user/completeProfile' element={
-          // <ProtectedRoute>
-
+        {/* <Route path='/user/completeProfile' element={
+          // <ProtectedRoute> 
           // {
             step1Completed || JSON.parse(localStorage.getItem('step1Completed')) 
               ? (step2Completed ? 
@@ -151,7 +156,26 @@ function App() {
 
 
           // </ProtectedRoute>
-        }/>
+        }/> */}
+
+
+        <Route path='/user/completeProfile' element={
+    loading ? (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    ) : !user ? (
+      <Navigate to='/register' replace />
+    )  : !user.step1Completed ? (
+      <Step1 />
+    ) : !user.step2Completed ? (
+      <Step2 />
+    ) : !user.step3Completed ? (
+      <Step3 />
+    ) : (
+      <CompleteProfile />
+    )
+  }/>
       </Routes>
 
       </div>

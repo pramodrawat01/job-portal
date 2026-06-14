@@ -3,6 +3,12 @@ import bcrypt from 'bcrypt'
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken'
 
+export const getMe = async(req, res) => {
+    res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+}
 
 export const registerUser = async (req, res, next) => {
     try {
@@ -41,8 +47,20 @@ export const registerUser = async (req, res, next) => {
         });
       
         await user.save();
+
+        const token = jwt.sign(
+            {id : user._id},
+            process.env.JWT_SECRET,
+            {expiresIn : '7d'}
+        )
       
-        res.status(201).json({
+        res
+        .cookie("token", token , {
+            httpOnly : true,
+            secure : false,
+            sameSite : "lax"
+        })
+        .status(201).json({
             success : true,
             message: "registerd a new user successfully !",
             user : {
@@ -94,12 +112,16 @@ export const loginUser = async (req, res) => {
     
         const token = jwt.sign(
             {id : user._id},
-            process.env.JWT_REFRESH_TOKEN_KEY,
+            process.env.JWT_SECRET,
             {expiresIn : '7d'}
         )
     
         res
-            .cookie("token", token)
+            .cookie("token", token, {
+                httpOnly: true,
+                secure: false, // true in production
+                sameSite: "lax",
+            })
             .status(200)
             .json({
                 message : "logged in successfully",

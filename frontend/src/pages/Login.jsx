@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/loginSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
 
@@ -22,7 +23,7 @@ const Login = () => {
     // console.log(userLogin)
 
     try {
-      const res = await fetch('http://localhost:3000/v1/login', {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/v1/login`, {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -35,10 +36,12 @@ const Login = () => {
 
       if(res.ok){
         dispatch(addUser(data.user))
+        toast.success("Login Successful!")
         navigate('/user/completeProfile')
       }
     } catch (error) {
       console.log(error, "error in login")
+      toast.error("Login failed...!")
     }
 
     // if (email && password) {

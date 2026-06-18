@@ -17,11 +17,11 @@ const educationSchema = new Schema({
 
 const experienceSchema = new Schema({
     resumeHeadline: { type: String },
-    preferredLocations: [{type : String, maxlength : 10}],
+    preferredLocations: [{type : String, maxlength : 50}],
     preferredSalary: { type: String },
     gender: { type: String, enum: ["Male", "Female", "Other"] },
     resume: { type: String }, // resume file URL or path
-    portfolioLink: { type: String },
+    portfolioLink: { type: String },    
 })
 
 const userSchema = new Schema({
@@ -48,8 +48,14 @@ const userSchema = new Schema({
         enum : ["fresher", "experienced"],
         required : true
     },
-    education : educationSchema,
-    experience : experienceSchema, 
+    education : {
+        type :  educationSchema,
+        default : {}
+    },
+    experience : {
+        type : experienceSchema,
+        default : {}
+    }, 
     isEmailVerified : {
         type : Boolean,
         default : false,

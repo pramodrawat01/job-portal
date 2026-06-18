@@ -21,7 +21,7 @@ const Login = () => {
     } 
 
     // console.log(userLogin)
-
+    console.log(import.meta.env.VITE_BASE_URL)
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/v1/login`, {
         method : "POST",
@@ -35,12 +35,13 @@ const Login = () => {
       const data = await res.json()
 
       if(res.ok){
+       localStorage.setItem("user", JSON.stringify(data.user));
         dispatch(addUser(data.user))
         toast.success("Login Successful!")
         navigate('/user/completeProfile')
       }
     } catch (error) {
-      console.log(error, "error in login")
+      console.log(error.message, "error in login")
       toast.error("Login failed...!")
     }
 

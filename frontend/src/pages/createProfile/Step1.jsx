@@ -21,6 +21,8 @@ const RegisterPhone = () => {
   const {name, id} =useSelector(state => state.signup?.user)
   // console.log(name, id,  "this is user ")
 
+  // console.log(localStorage.getItem("user"))
+
   // generate otp and sent it to entered mobile number 
   const handleSendOtp = async(e) => {
     e.preventDefault()
@@ -48,26 +50,32 @@ const RegisterPhone = () => {
       toast.error("Something is wrong, Can not sent otp!")
       console.log(error);
     }
-    setOtpSent(true);
   };
 
   // verify otp 
   const handleVerifyOtp = async(e) =>{
     e.preventDefault()
+    console.log("email : ", email , "otp : ", otp)  
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/v1/verify-otp`, {
         method : "POST",
         headers : {
           "Content-Type": "application/json",
         },
+        credentials : 'include',
         body : JSON.stringify({otp, email})
       })
       const data = await res.json()
 
+
       if(res.status === 200){
+        console.log(data, "otp verification data")
         toast.success(data.message)
         setIsVerified(true)
         dispatch(verifyOtp())
+      }
+      if(!res.ok){
+        console.log("failed to vefify otp : ", data.message)
       }
     } catch (error) {
       toast.error("otp verification failed ! try again")
@@ -172,7 +180,7 @@ const RegisterPhone = () => {
               </div>
               <button
                 type="submit"
-                onClick={()=> handleVerifyOtp()}
+                onClick={handleVerifyOtp}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition duration-200"
               >
                 Verify OTP

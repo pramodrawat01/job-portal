@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
-import dbConnect from "./db/db.js";
+import dbConnect from "./config/db.js";
 import userRoutes from "./routes/user.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import otpRoutes from "./routes/otp.js";

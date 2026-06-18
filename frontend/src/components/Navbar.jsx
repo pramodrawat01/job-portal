@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <div className='flex items-center justify-between h-[80px] px-[185px] w-full mx-auto shadow-md shadow-black/30 fixed top-0 left-0 text-black  bg-[#ffffff] z-[9999]'>
         <div className='flex gap-2 items-center text-xl'>
-            <Link to='/'>jobspot.com</Link>
+            <Link to='/home'>jobspot.com</Link>
             
         </div>
 

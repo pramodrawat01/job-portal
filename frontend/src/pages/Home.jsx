@@ -12,8 +12,6 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FaQuestionCircle } from "react-icons/fa";
 
 
-
-
 import { FaUserPlus, FaCloudUploadAlt, FaSearch, FaCheckCircle } from "react-icons/fa";
 const steps = [
   {
@@ -174,9 +172,8 @@ const Home = () => {
       }
     };
   
-
   const {categories, featuredJobs} = useSelector(state => state.jobs)
-  console.log(featuredJobs, "featured jobs in home")
+  // console.log(featuredJobs, "featured jobs in home")
 
   // console.log(categories, "this is categories")
 
@@ -186,13 +183,8 @@ const Home = () => {
 
   return (
     <div className="">
-    
-      
-    
-     
-
-        {/* hero section */}
-      <div className="hero-section z-10 bg-gradient-to-b from-white to-green-50 mt-[80px] w-full flex flex-col items-center px-6 md:px-0 relative">
+      {/* hero section */}
+    <div className="hero-section z-10 bg-gradient-to-b from-white to-green-50 mt-[80px] w-full flex flex-col items-center px-6 md:px-0 relative">
 
 
     

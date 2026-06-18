@@ -22,7 +22,7 @@ const loginSlice = createSlice({
         },
         removeUser : (state, action) =>{
             return {
-                ...state,
+                ...state, 
                 isLoggedIn : false,
                 loggedInUser : null
             }

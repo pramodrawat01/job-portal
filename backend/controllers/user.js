@@ -2,14 +2,23 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken'
+import cloudinary from '../config/cloudinary.js';
+import fs from "fs"
 
+/// send safeObject to frontend which does not include importent credentials
 export const getMe = async(req, res) => {
+
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: "Not logged in" });
+    }
+
     res.status(200).json({
-    success: true,
-    user: req.user,
-  });
+        success: true,
+        user: req.user,
+    });
 }
 
+// register user 
 export const registerUser = async (req, res, next) => {
     try {
         
@@ -77,19 +86,41 @@ export const registerUser = async (req, res, next) => {
     }
 };
 
-
+// add education details in user's profile
 export const registerEducation = async(req, res, next) => {
-    const { id, highest_qualification, course, course_type, specialization, university, starting_year, passing_year, cgpa, key_skills, resume, portfolio} = req.body.fd
+    const userId = req.user.id
+    const {
+        highest_qualification, 
+        course, 
+        course_type, 
+        specialization, 
+        university, 
+        starting_year, 
+        passing_year, 
+        cgpa, 
+        key_skills, 
+        portfolio
+    } = req.body
 
-    if(!highest_qualification || !course || !course_type || !specialization || !university || !starting_year || !passing_year || !key_skills || !resume){
+    if(!highest_qualification || !course || !course_type || !specialization || !university || !starting_year || !passing_year || !key_skills ){
         const err = new Error("require fields are missings...!")
         err.status = 401
         throw err
     }
 
+    const user = await User.findById(userId)
+    if(!user){
+        return res.status(404).json({
+            success : false, 
+            message : "User not found !"
+        })
+    }
+
     let resumeUrl = " ";
     if(req.file){
+       
         const result =  await cloudinary.uploader.upload(req.file.path, {
+            resource_type: "raw",
             folder : 'uploads'
         })
 
@@ -99,13 +130,92 @@ export const registerEducation = async(req, res, next) => {
         })
     }
 
-    
+    // save user's education info
+    user.education = {
+        highestQualification: highest_qualification,
+        courseName: course,
+        courseType: course_type,
+        specialization,
+        university,
+        startingYear: Number(starting_year),
+        passingYear: Number(passing_year),
+        gpaOutOf10: Number(cgpa),
+        keySkills : 
+            typeof key_skills === "string"
+            ? key_skills.split(",").map((s) => s.trim())
+            : []
+    }
 
+    if (!user.experience) {
+        user.experience = {};
+    }
 
+    if(portfolio){
+        user.experience.portfolioLink = portfolio
+    } 
+        
+    if(resumeUrl){
+        console.log(resumeUrl, 'resume url')
+        user.experience.resume = resumeUrl
+    }
+    user.step2Completed = true
+    await user.save()
 
+    return res.status(200).json({
+        success: true,
+        message: "Education saved successfully",
+        user
+    });
 
 }
 
+// add preferences details
+export const registerPreferences = async (req, res, next) => {
+    const userId = req.user.id;
+
+    const {
+        resumeHeadline,
+        preferredLocations,
+        preferredSalary,
+        gender,
+    } = req.body
+
+    const user = await User.findById(userId)
+
+    if(!user){
+        return res.status(404).json({
+            success : false,
+            message : "user not found"
+        })
+    }
+
+    if(!user.experience){
+        user.experience = {}
+    }
+    user.experience.resumeHeadline = resumeHeadline;
+    user.experience.preferredLocations = preferredLocations;
+    user.experience.preferredSalary = preferredSalary;
+    user.experience.gender = gender;
+
+    user.step3Completed = true;
+    if (
+        user.step1Completed &&
+        user.step2Completed &&
+        user.step3Completed
+    ) {
+        user.profileCompleted = true;
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+        success: true,
+        message: "Preferences saved successfully",
+        user,
+    });
+}
+
+// login user with credintials
 export const loginUser = async (req, res) => {
     const {user} = req.body;
     try {

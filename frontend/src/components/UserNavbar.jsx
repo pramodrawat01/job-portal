@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -7,6 +7,8 @@ import Overlay from "./Overlay";
 import ProfileCompo from "./ProfileCompo";
 import logo from "../assets/logo1.png";
 // import { selectFilteredJobs } from '../store/searchSlice';
+import { FaUserCircle } from "react-icons/fa";
+
 
 
 const UserNavbar = () => {
@@ -20,6 +22,7 @@ const UserNavbar = () => {
   // console.log(jobs, "inside navbar");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   // console.log(searchValue, "this is store value");
 
@@ -65,7 +68,7 @@ const UserNavbar = () => {
       ) : null}
 
       <div className="flex gap-4  items-center ">
-        <Link to="/" className="flex items-center">
+        <Link to="/home" className="flex items-center">
           
           <div className="text-2xl font-bold text-green-800">jobSpot</div>
         </Link>
@@ -144,7 +147,10 @@ const UserNavbar = () => {
 
       <div className="links flex gap-4 items-center">
         {JSON.parse(localStorage.getItem("user")) ? (
-          <div>logged in</div>
+           <FaUserCircle
+      className="text-3xl cursor-pointer hover:scale-110 transition"
+      onClick={() => navigate("/userHome")}
+    />
         ) : (
           <div className="flex gap-4">
             <Link

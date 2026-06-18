@@ -11,6 +11,7 @@ export const useAuthUser = () => {
                 const data = await getMe();
                 if(data?.success) setUser(data.user)
             } catch (error) {
+                console.log(error?.message, "not autherised")
                 setUser(null)
             } finally{
                 setLoading(false)

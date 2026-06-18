@@ -29,6 +29,8 @@ export const sendOtp = async(req, res, next) => {
 export const verifyOtp = async(req, res)=>{
     const {otp, email} = req.body
 
+    console.log(otp, email)
+
     if(!email || !otp){
         const err = new Error('otp and email is required to verify')
         err.status = 401
@@ -62,9 +64,10 @@ export const verifyOtp = async(req, res)=>{
     }
 
     user.isEmailVerified = true;
-    user.step1Completed = true
+    user.step1Completed = true;
     await user.save()
 
+    console.log(user, 'updated user')
     await Otp.deleteOne({
         _id : otpRecord._id,
     })
@@ -74,7 +77,7 @@ export const verifyOtp = async(req, res)=>{
         message : 'otp verified successfully',
         user : {
             email : user.email,
-            step1Completed : true,
+            step1Completed : user.step1Completed,
             isEmailVerified : user.isEmailVerified,
         }
         

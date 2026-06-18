@@ -28,6 +28,7 @@ import { useAuthUser } from './hooks/useAuthUser'
 function App() {
 
   const {user, loading} = useAuthUser()
+  //console.log(user, 'logged in user in app.jsx')
 
 
   const isLoggedIn = useSelector(state => state.login.isLoggedIn)
@@ -99,11 +100,7 @@ function App() {
         
         <Route 
           path='/' 
-          element={ 
-            loggedUser 
-            ? 
-            <Navigate to='/userHome' replace/>
-            :
+          element={
             <Navigate to='/home' replace/>
           } 
         />
@@ -160,22 +157,22 @@ function App() {
 
 
         <Route path='/user/completeProfile' element={
-    loading ? (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-500">Loading...</p>
-      </div>
-    ) : !user ? (
-      <Navigate to='/register' replace />
-    )  : !user.step1Completed ? (
-      <Step1 />
-    ) : !user.step2Completed ? (
-      <Step2 />
-    ) : !user.step3Completed ? (
-      <Step3 />
-    ) : (
-      <CompleteProfile />
-    )
-  }/>
+          loading ? (
+            <div className="flex justify-center items-center min-h-screen">
+              <p className="text-gray-500">Loading...</p>
+            </div>
+          ) : !user ? (
+            <Navigate to='/register' replace />
+          )  : !user.step1Completed ? (
+            <Step1 />
+          ) : !user.step2Completed ? (
+            <Step2 />
+          ) : !user.step3Completed ? (
+            <Step3 />
+          ) : (
+            <CompleteProfile />
+          )
+        }/>
       </Routes>
 
       </div>

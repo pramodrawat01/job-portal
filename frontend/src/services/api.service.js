@@ -16,6 +16,6 @@ export const getMe = async () => {
     return data;
   } catch (error) {
     console.error("Get Me Error:", error);
-    throw error;
+    return error;
   }
 };

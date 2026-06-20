@@ -123,7 +123,7 @@ const Register = () => {
 
   return (
 
-    <div className="flex justify-center gap-12 items-center  bg-gradient-to-t from-green-100 via-green-50 to-white text-gray-800 px-10 mt-[120px]">
+    <div className="flex justify-center gap-12 items-center   px-10 ">
       
       {/* Left illustration / info section */}
       <div className="h-[450px] w-[340px] bg-white shadow-md border border-green-100 rounded-2xl p-6 flex flex-col justify-center items-start self-start">
@@ -155,13 +155,13 @@ const Register = () => {
 
     <div className="">
       {/* Profile Steps */}
-      <div className="flex mb-4 flex-col gap-2 w-[700px] bg-white rounded-2xl shadow-md border border-green-100 px-4 py-2">
+      <div className="flex mb-4 flex-col gap-2 w-[700px]">
        
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: "Verify Email", done: signedUpUser.step1Completed },
-            { label: "Education", done: signedUpUser.step2Completed },
-            { label: "Step 3", done: signedUpUser.step3Completed },
+            { label: "Verify Email", done: signedUpUser?.step1Completed },
+            { label: "Education", done: signedUpUser?.step2Completed },
+            { label: "Step 3", done: signedUpUser?.step3Completed },
           ].map(({ label, done }) => (
             <div
               key={label}

@@ -70,7 +70,7 @@ const UserNavbar = () => {
       <div className="flex gap-4  items-center ">
         <Link to="/home" className="flex items-center">
           
-          <div className="text-2xl font-bold text-green-800">jobSpot</div>
+          <div className="text-2xl font-bold text-green-800">100<span className="text-orange-500">x</span>Portal</div>
         </Link>
 
         <div className="group ">

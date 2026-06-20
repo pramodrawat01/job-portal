@@ -7,7 +7,7 @@ export const auth = async(req, res, next)=>{
         console.log(token, "token in middleware")
         if (!token) {
             return res.status(401).json({
-            message: "Unauthorized",
+            message: "Unauthorized Error",
         })};
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)

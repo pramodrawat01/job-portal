@@ -87,60 +87,8 @@ const Step2 = () => {
     fetchUser();
   }, []);
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center py-10 mt-[80px] ">
-      <div className="w-[90%] md:w-[80%] lg:w-[70%] flex flex-col md:flex-row gap-12 ">
-        {/* Left illustration / info section */}
-        <div className="h-[450px] w-[340px] bg-white shadow-md border border-green-100 rounded-2xl p-6 flex flex-col justify-center items-start self-start">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png"
-            alt="Illustration"
-            className="w-40 mx-auto mb-6"
-          />
-          <h2 className="text-lg font-semibold mb-4 text-gray-700">
-            On registering, you can
-          </h2>
-          <ul className="space-y-3 text-gray-600 text-[15px]">
-            <li className="flex items-center gap-2">
-              <FiCheckCircle className="text-green-700" size={18} />
-              Build your profile and let recruiters find you
-            </li>
-            <li className="flex items-center gap-2">
-              <FiCheckCircle className="text-green-700" size={18} />
-              Get job postings delivered right to your email
-            </li>
-            <li className="flex items-center gap-2">
-              <FiCheckCircle className="text-green-700" size={18} />
-              Find a job and grow your career
-            </li>
-          </ul>
-        </div>
-
-        <div className="md:w-2/3">
-          <div className="flex mb-4 flex-col gap-2 w-full bg-white rounded-2xl shadow-md border border-green-100 px-4 py-2">
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: "Verify Email", done: signedUpUser.step1Completed },
-                { label: "Education", done: signedUpUser.step2Completed },
-                { label: "Step 3", done: signedUpUser.step3Completed },
-              ].map(({ label, done }) => (
-                <div
-                  key={label}
-                  className={`p-3 rounded-xl border text-center text-sm font-medium ${
-                    done
-                      ? "bg-green-50 border-green-700 text-green-800"
-                      : "bg-gray-50 border-gray-200 text-gray-400"
-                  }`}
-                >
-                  {done ? <FiCheckCircle className="inline mr-1" /> : "○"}{" "}
-                  {label}
-                </div>
-              ))}
-            </div>
-          </div>
-
-        <div className=" bg-white rounded-2xl shadow p-8">
-          {/* Right Section */}
-          <div className=" bg-white rounded-2xl">
+   
+      <div className="w-full p-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               Education details
             </h2>
@@ -315,13 +263,7 @@ const Step2 = () => {
                 Save and Continue
               </button>
             </form>
-          </div>
-        </div>
-
-        </div>
-
-      </div>
-    </div>
+         </div>
   );
 };
 

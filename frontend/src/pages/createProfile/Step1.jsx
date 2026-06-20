@@ -88,35 +88,7 @@ const RegisterPhone = () => {
   
 
   return (
-    <div className="flex justify-center gap-12 items-center min-h-screen bg-gradient-to-t from-green-100 via-green-50 to-white text-gray-800 px-10 mt-[120px]">
-      {/* Left illustration / info section */}
-      <div className="h-[450px] w-[340px] bg-white shadow-md border border-green-100 rounded-2xl p-6 flex flex-col justify-center items-start self-start">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png"
-          alt="Illustration"
-          className="w-40 mx-auto mb-6"
-        />
-        <h2 className="text-lg font-semibold mb-4 text-gray-700">
-          On registering, you can
-        </h2>
-        <ul className="space-y-3 text-gray-600 text-[15px]">
-          <li className="flex items-center gap-2">
-            <FiCheckCircle className="text-green-700" size={18} />
-            Build your profile and let recruiters find you
-          </li>
-          <li className="flex items-center gap-2">
-            <FiCheckCircle className="text-green-700" size={18} />
-            Get job postings delivered right to your email
-          </li>
-          <li className="flex items-center gap-2">
-            <FiCheckCircle className="text-green-700" size={18} />
-            Find a job and grow your career
-          </li>
-        </ul>
-      </div>
-
-      {/* Right section - email verification */}
-      <div className="w-[680px] bg-white shadow-md border border-green-100 rounded-2xl p-8 flex flex-col justify-center items-start self-start">
+      <div className="w-full p-8 flex flex-col justify-center items-start self-start">
         {
           otpSent && (
             <LuArrowLeft
@@ -207,7 +179,6 @@ const RegisterPhone = () => {
 )}
         </form>
       </div>
-    </div>
   );
 };
 
